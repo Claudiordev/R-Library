@@ -1,4 +1,4 @@
-package Time;
+package time;
 
 public class Converters {
 
@@ -21,7 +21,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Hours to Milliseconds
+     * Convert entrance value of Hours to Milliseconds
      * @param value int of hours
      * @return int value of Milliseconds
      */
@@ -30,7 +30,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Minutes to Seconds
+     * Convert entrance value of Minutes to Seconds
      * @param value int of Minutes
      * @return int value of Seconds
      */
@@ -39,7 +39,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Minutes to Milliseconds
+     * Convert entrance value of Minutes to Milliseconds
      * @param value int of Minutes
      * @return int value of Milliseconds
      */
@@ -48,7 +48,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Minutes to Hours
+     * Convert entrance value of Minutes to Hours
      * @param value int of Minutes
      * @return int value of Hours
      */
@@ -57,7 +57,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Seconds to Milliseconds
+     * Convert entrance value of Seconds to Milliseconds
      * @param value int of Seconds
      * @return int value of Milliseconds
      */
@@ -75,7 +75,7 @@ public class Converters {
     }
 
     /**
-     * Convert entrace value of Second to Hour
+     * Convert entrance value of Second to Hour
      * @param value int value of Seconds
      * @return int value of Hours
      */
