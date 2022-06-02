@@ -13,7 +13,10 @@ public abstract class Server {
     final List<Connection> connections = new Vector<>(); //List of received connections
     Address address;
     ServerSocket serverSocket;
-    static boolean log = false;
+    static boolean log = true;
+
+    //Default Constructor
+    public Server() {}
 
     /**
      * @param ip of ServerSocket for requests receivable, ex: 127.0.0.1
@@ -21,27 +24,29 @@ public abstract class Server {
      * @param acceptance New thread for acceptance of connections through acceptConnections Runnable, if true initiated within Constructor
      * @throws IOException
      */
-    Server(String ip,int port,boolean acceptance) throws IOException {
+    public Server(String ip,int port,boolean acceptance) throws IOException {
         this.address = new Address(ip,port);
 
         serverSocket = new ServerSocket(address.getPort());
 
         if(acceptance && serverSocket.isBound()){
             new Thread(acceptConnections()).start(); //Wait for new connections
+
+            new Thread(countConnections(5000)).start();
         }
     }
 
     /**
      * Listener for each connection receival
      */
-    abstract void handleConnection(Connection c);
+    public abstract void handleConnection(Connection c);
 
     /**
      * Listener for each Message received
      * @param c Connection Object
      * @param message String received
      */
-    abstract void handleMessage(Connection c,String message);
+    public abstract void handleMessage(Connection c,String message);
 
     /**
      * Alter the state of Log state
@@ -101,6 +106,8 @@ public abstract class Server {
                         }
 
                         new Thread(() -> handleConnection(c)).start(); //Handle Connection within separated Thread
+
+                        readMessages(c);
                     }
 
                 } catch (IOException e) {
@@ -121,7 +128,7 @@ public abstract class Server {
                 String message;
                 while ((message = c.getClientServer().readLine()) != null) {
                     if (log){
-                        System.out.println("Message received: " + message);
+                        System.out.println("Server Message received: " + message);
                     }
                     c.addMessageLog(message);
                     handleMessage(c, message);
@@ -146,6 +153,9 @@ public abstract class Server {
                 if (!c.getMessageLog().contains("pong")){
                     if (connections.contains(c)) {
                         removeClient(c);
+                        if (log) {
+                            System.out.println("Client disconnected and removed");
+                        }
                     }
                 }
 

@@ -14,7 +14,7 @@ public class Connection {
     private PrintWriter serverClient; //Write
     private BufferedReader clientServer; //Read
     private List<String> messageLog; //List of messages received
-    private int timeout = 3000;
+    private int timeout = 5000;
 
     public Connection(Socket socket, PrintWriter serverClient, BufferedReader clientServer) {
         this.client = socket;

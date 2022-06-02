@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="R-Library:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/R_Library_jar</output-path>
+    <root id="archive" name="R-Library.jar">
+      <element id="module-output" name="R-Library" />
+    </root>
+  </artifact>
+</component>
