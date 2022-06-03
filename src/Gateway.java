@@ -14,5 +14,7 @@ public class Gateway extends Server {
     }
 
     @Override
-    public void handleMessage(Connection c, String message) {}
+    public void handleMessage(Connection c, String message) {
+        System.out.println("[SERVER] Message From Client received from ip " + c.getClient().getInetAddress().getHostAddress() + " : " + message);
+    }
 }

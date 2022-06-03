@@ -32,7 +32,7 @@ public abstract class Server {
         if(acceptance && serverSocket.isBound()){
             new Thread(acceptConnections()).start(); //Wait for new connections
 
-            new Thread(countConnections(5000)).start();
+            //new Thread(countConnections(5000)).start();
         }
     }
 
@@ -95,6 +95,7 @@ public abstract class Server {
             while (true) {
                 try {
                     Socket localSocket = serverSocket.accept(); //Stop here the loop and wait for new Connection, reason that need to be used in new Thread
+                    localSocket.setKeepAlive(true);
 
                     BufferedReader reader = new BufferedReader(new InputStreamReader(localSocket.getInputStream()));
                     PrintWriter writer = new PrintWriter(localSocket.getOutputStream(),true);
@@ -107,7 +108,7 @@ public abstract class Server {
 
                         new Thread(() -> handleConnection(c)).start(); //Handle Connection within separated Thread
 
-                        readMessages(c);
+                        startConnectionReceived(c);
                     }
 
                 } catch (IOException e) {
@@ -127,9 +128,6 @@ public abstract class Server {
             try {
                 String message;
                 while ((message = c.getClientServer().readLine()) != null) {
-                    if (log){
-                        System.out.println("Server Message received: " + message);
-                    }
                     c.addMessageLog(message);
                     handleMessage(c, message);
                 }
@@ -152,8 +150,15 @@ public abstract class Server {
 
                 if (!c.getMessageLog().contains("pong")){
                     if (connections.contains(c)) {
-                        removeClient(c);
                         if (log) {
+                            try {
+                                if (c.getClient().isClosed()) c.getClient().close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            removeClient(c);
+
                             System.out.println("Client disconnected and removed");
                         }
                     }

@@ -6,9 +6,9 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String args[]) throws IOException {
-        Server gateway = new Gateway("192.168.1.233",3500,true);
+        Server gateway = new Gateway("192.168.1.4",3306,true);
 
-        client();
+        //client();
     }
 
     public static void client() {
@@ -18,8 +18,10 @@ public class Main {
 
                 try {
                     Thread.sleep(3000);
-                    Client client = new Client("192.168.1.233", 3500,true);
+                    Client client = new Client("127.0.0.1", 3306,true);
 
+                    Thread.sleep(1000);
+                    client.getWriter().println("Teste");
 
                 } catch(IOException e){
                     e.printStackTrace();
