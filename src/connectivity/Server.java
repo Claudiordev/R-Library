@@ -79,7 +79,7 @@ public abstract class Server {
      * @param message to be sent to Connection in question
      */
     public void writeToClient(Connection c, String message){
-        c.getServerClient().println(message);
+        c.getWriter().println(message);
     }
 
     /**
@@ -127,7 +127,7 @@ public abstract class Server {
         return () -> {
             try {
                 String message;
-                while ((message = c.getClientServer().readLine()) != null) {
+                while ((message = c.getReader().readLine()) != null) {
                     c.addMessageLog(message);
                     handleMessage(c, message);
                 }
@@ -146,7 +146,7 @@ public abstract class Server {
     public Runnable checkConnection(Connection c) {
         return () -> {
             while (true) {
-                c.getServerClient().println("ping");
+                c.getWriter().println("ping");
 
                 if (!c.getMessageLog().contains("pong")){
                     if (connections.contains(c)) {

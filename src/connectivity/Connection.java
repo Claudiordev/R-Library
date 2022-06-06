@@ -11,15 +11,15 @@ import java.util.Vector;
  */
 public class Connection {
     private Socket client;
-    private PrintWriter serverClient; //Write
-    private BufferedReader clientServer; //Read
+    private PrintWriter writer; //Write
+    private BufferedReader reader; //Read
     private List<String> messageLog; //List of messages received
     private int timeout = 5000;
 
     public Connection(Socket socket, PrintWriter serverClient, BufferedReader clientServer) {
         this.client = socket;
-        this.serverClient = serverClient;
-        this.clientServer = clientServer;
+        this.writer = serverClient;
+        this.reader = clientServer;
         this.messageLog = new Vector<>();
     }
 
@@ -41,20 +41,20 @@ public class Connection {
     /**
      * @return PrintWriter of Connection
      */
-    public PrintWriter getServerClient() {
-        return serverClient;
+    public PrintWriter getWriter() {
+        return writer;
     }
 
-    public void setServerClient(PrintWriter serverClient) {
-        this.serverClient = serverClient;
+    public void setWriter(PrintWriter writer) {
+        this.writer = writer;
     }
 
-    public BufferedReader getClientServer() {
-        return clientServer;
+    public BufferedReader getReader() {
+        return reader;
     }
 
-    public void setClientServer(BufferedReader clientServer) {
-        this.clientServer = clientServer;
+    public void setReader(BufferedReader reader) {
+        this.reader = reader;
     }
 
     public List<String> getMessageLog() {
