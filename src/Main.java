@@ -6,11 +6,17 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String args[]) throws IOException {
-        Server gateway = new Gateway("192.168.1.233",3306,true);
+        String var = "OL";
 
-        //client();
+        for (int i = 0; i < var.length();i++) {
+            String value = "";
+            String a = String.valueOf(var.charAt(i));
+            value = value + a;
+
+            System.out.println(a);
+        }
     }
-
+/*
     public static void client() {
         new Thread(new Runnable() {
             @Override
@@ -32,5 +38,5 @@ public class Main {
                 }
             }
         }).start();
-    }
+    }*/
 }
