@@ -25,6 +25,16 @@ public class TestClient extends Client {
 
                     return false;
                 }
+
+                @Override
+                public void offline() {
+
+                }
+
+                @Override
+                public void reconnected() {
+
+                }
             };
             client = new TestClient(ip, port, checkConnection,reconnection);
 

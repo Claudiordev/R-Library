@@ -6,17 +6,12 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String args[]) throws IOException {
-        String var = "OL";
 
-        for (int i = 0; i < var.length();i++) {
-            String value = "";
-            String a = String.valueOf(var.charAt(i));
-            value = value + a;
+        new Gateway("192.168.1.3",3750,true);
 
-            System.out.println(a);
-        }
+        client();
     }
-/*
+
     public static void client() {
         new Thread(new Runnable() {
             @Override
@@ -24,11 +19,9 @@ public class Main {
 
                 try {
                     Thread.sleep(3000);
-                    //Client client = new Client("127.0.0.1", 3306,true);
-                    Client client = TestClient.getInstance("127.0.0.1",3306,true);
+                    Client client = TestClient.getInstance("192.168.1.3",3750,true);
 
                     Thread.sleep(3000);
-                    //client.getWriter().println("Teste");
                     client.getSocket().close();
 
                 } catch(IOException e){
@@ -38,5 +31,5 @@ public class Main {
                 }
             }
         }).start();
-    }*/
+    }
 }
