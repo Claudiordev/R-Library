@@ -28,17 +28,15 @@ public class TestClient extends Client {
 
                 @Override
                 public void offline() {
-
+                    System.out.println("OFFLINE");
                 }
 
                 @Override
                 public void reconnected() {
-
+                    System.out.println("RECONNECTED");
                 }
             };
             client = new TestClient(ip, port, checkConnection,reconnection);
-
-            System.out.println(client);
         }
 
         return client;

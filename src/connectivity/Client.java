@@ -96,9 +96,11 @@ public abstract class Client {
                     } else {
                         connectionState = States.RECONNECTING;
                         if (log) System.out.println("[CLIENT] Connection lost, trying to reconnect...");
+                        reconnection.offline(); //Fire offline behaviour
 
                         //reconnect(serverIp,serverPort,checkConnection);
                         if (reconnection.reconnect()) {
+                            reconnection.reconnected(); //Fire reconnected behaviour
                             break;
                         }
                     }
@@ -113,5 +115,9 @@ public abstract class Client {
 
     public List<String> getMessageLog() {
         return messageLog;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

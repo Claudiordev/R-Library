@@ -1,5 +1,7 @@
 package connectivity;
 
+import connectivity.utils.Action;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ public abstract class Server {
     Address address;
     ServerSocket serverSocket;
     static boolean log = true;
+    public List<Action> actions = new Vector<>(); //List of actions made by each Connection
 
     //Default Constructor
     public Server() {}
@@ -47,6 +50,12 @@ public abstract class Server {
      * @param message String received
      */
     public abstract void handleMessage(Connection c,String message);
+
+    /**
+     * Handle the Behaviour of every Action received
+     * @param action
+     */
+    public abstract void handleAction(Action action);
 
     /**
      * Alter the state of Log state
@@ -129,7 +138,17 @@ public abstract class Server {
                 String message;
                 while ((message = c.getReader().readLine()) != null) {
                     c.addMessageLog(message);
-                    handleMessage(c, message);
+
+                    //Is an action
+                    if (message.contains("<") && message.contains(">")) {
+                        List<String> processedAction = Action.processMessage(message);
+                        Action action = new Action(processedAction.get(0),processedAction,c,message);
+                        actions.add(action);
+
+                        handleAction(action); //Handle every action received
+                    }
+
+                    handleMessage(c, message); //Handle every message received onto a Listener
                 }
             } catch (IOException e) {
                 removeClient(c);

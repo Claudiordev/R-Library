@@ -7,28 +7,25 @@ public class Main {
 
     public static void main(String args[]) throws IOException {
 
-        new Gateway("192.168.1.3",3750,true);
+        new Gateway("192.168.1.187",3750,true);
 
-        client();
+        //client();
     }
 
     public static void client() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+                Client client = TestClient.getInstance("192.168.1.187",3750,true);
 
-                try {
-                    Thread.sleep(3000);
-                    Client client = TestClient.getInstance("192.168.1.3",3750,true);
+                Thread.sleep(3000);
+                //client.getSocket().close();
+                client.getConnection().getWriter().println("<message><of>");
 
-                    Thread.sleep(3000);
-                    client.getSocket().close();
-
-                } catch(IOException e){
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+            } catch(IOException e){
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }).start();
     }
