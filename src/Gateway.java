@@ -21,12 +21,29 @@ public class Gateway extends Server {
 
     @Override
     public void handleAction(Action action) {
+        Connection connection = action.getConnection(); //Get Connection of the one that sent the action
+
         switch (action.getHeader()) {
-            case "reconnecting":
+            case "reconnect":
                 for (Action a: actions) {
-                    Connection connection = action.getConnection(); //Get Connection of the one that sent the action
-                    if (!connection.getClient().isClosed())
-                        connection.getWriter().println(a.getNonProccessedMessage());
+                    if (!connection.getClient().isClosed()) connection.getWriter().println(a.getNonProccessedMessage());
+                    System.out.println("RECONNECTED");
+                }
+                break;
+                //Pager section
+            case "pager":
+                if (action.getArguments().get(1).equals("call")) {
+                    //Pager Call Action
+                    String number = action.getArguments().get(2); //Number of pager
+                    System.out.println("PAGER CALLED " + number);
+                }
+                break;
+
+            case "phone":
+                if (action.getArguments().get(1).equals("call")) {
+                    //Phone Call Action
+                    String number2 = action.getArguments().get(2); //Number of phone
+                    System.out.println("PHONE CALLED " + number2);
                 }
                 break;
         }
