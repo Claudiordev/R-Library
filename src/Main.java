@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String args[]) throws IOException {
 
-        new Gateway("192.168.1.233",3750,true);
+        new Gateway("192.168.1.198",3750,true);
         //client();
 
         //retrieveIps();

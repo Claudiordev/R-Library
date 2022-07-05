@@ -1,5 +1,6 @@
 package connectivity;
 
+import connectivity.utils.Action;
 import connectivity.utils.States;
 
 import java.io.BufferedReader;
@@ -17,6 +18,8 @@ public abstract class Client {
     private List<String> messageLog = new Vector<>(); //List of messages received
     private String serverIp; //Store IP after connection
     private int serverPort; //Store Port of IP after connection
+
+    private Behaviours behaviours;
 
     private States connectionState = States.OFFLINE; //Store state of connection
 
@@ -71,6 +74,13 @@ public abstract class Client {
                             connection.getWriter().println("pong");
                             //writer.flush();
                         }
+
+                    if (message.contains("<") && message.contains(">")) {
+                        List<String> processedAction = Action.processMessage(message);
+                        Action action = new Action(processedAction.get(0),processedAction,connection,message);
+
+                        behaviours.handleAction(action); //Handle every action received
+                    }
 
                         if (log) System.out.println("[CLIENT] Server Message received: " + message);
                 }
