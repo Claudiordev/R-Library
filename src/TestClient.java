@@ -1,17 +1,23 @@
 import connectivity.Client;
+import connectivity.utils.Action;
+import connectivity.utils.Behaviours;
 
 import java.io.IOException;
 
 public class TestClient extends Client {
-    private static Client client = null;
 
-    public TestClient(String ip, int port, boolean checkConnection, Reconnection reconnection) throws IOException {
+    public TestClient(String ip, int port, boolean checkConnection, Behaviours reconnection) throws IOException {
         super(ip, port, checkConnection,reconnection);
     }
 
     public static Client getInstance(String ip, int port, boolean checkConnection) throws IOException {
         if (client == null) {
-            Reconnection reconnection = new Reconnection() {
+            Behaviours reconnection = new Behaviours() {
+                @Override
+                public void handleAction(Action action) {
+
+                }
+
                 @Override
                 public boolean reconnect() {
                     client = null;
@@ -36,13 +42,10 @@ public class TestClient extends Client {
                     System.out.println("RECONNECTED");
                 }
             };
+
             client = new TestClient(ip, port, checkConnection,reconnection);
         }
 
         return client;
-    }
-
-    public void destroyClient() {
-        client = null;
     }
 }

@@ -1,5 +1,4 @@
 import connectivity.Client;
-import connectivity.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,12 +19,13 @@ public class Main {
     public static void client() {
         new Thread(() -> {
             try {
-                Thread.sleep(3000);
-                Client client = TestClient.getInstance("127.0.0.1",3750,true);
+                Thread.sleep(1000);
+                Client client = TestClient.getInstance("192.168.1.198",3750,true);
 
-            } catch(IOException e){
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+                Thread.sleep(5000);
+                client.destroy();
+
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
         }).start();

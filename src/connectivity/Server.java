@@ -113,6 +113,7 @@ public abstract class Server {
                     if (!connections.contains(c)) {
                         synchronized (connections){
                             connections.add(c);
+                            writeToClient(c,"<pager><add><1><10>");
                         }
 
                         new Thread(() -> handleConnection(c)).start(); //Handle Connection within separated Thread
@@ -167,6 +168,7 @@ public abstract class Server {
             while (true) {
                 c.getWriter().println("ping");
 
+                //If doesn't contain a pong message on that connection, cut the connection
                 if (!c.getMessageLog().contains("pong")){
                     if (connections.contains(c)) {
                         if (log) {
@@ -178,7 +180,7 @@ public abstract class Server {
 
                             removeClient(c);
 
-                            System.out.println("Client disconnected and removed");
+                            if (log) System.out.println("[SERVER] Client disconnected and removed.");
                         }
                     }
                 }

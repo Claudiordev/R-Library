@@ -56,7 +56,6 @@ public class Action {
 
         while (matcher.find()) {
             processedMessage.add(matcher.group(1));
-            System.out.println(matcher.group(1));
         }
 
         return processedMessage;
